@@ -24,6 +24,8 @@ class WheresMyCoffee extends Component {
       var lastPosition = JSON.stringify(position);
       this.setState({lastPosition});
     });
+
+    
   }
 
   componentWillUnmount() {
@@ -42,9 +44,6 @@ class WheresMyCoffee extends Component {
         return response;
       })
     }
-    // console.log(getData())
-    console.log(this.state.initialPosition)
-    console.log(this.state.lastPosition)
 
     return (
       <View style={styles.container}>
