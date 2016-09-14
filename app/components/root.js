@@ -3,29 +3,47 @@ import {AppRegistry,StyleSheet,Text,View,TouchableElement} from 'react-native';
 import Button from 'react-native-button'
 import oauthSignature from 'oauth-signature'
 import n from 'nonce'
+import qs from 'querystring'
+import _ from 'lodash'
 
 class WheresMyCoffee extends Component {
   state = {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    data: 'unknown'
   };
 
   watchID: ?number = null;
 
   componentDidMount() {
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.stringify(position);
+        var initialPosition = position;
         this.setState({initialPosition});
       },
       (error) => alert(error),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
+      var lastPosition = position;
       this.setState({lastPosition});
     });
 
+    var timestamp = '&oauth_timestamp=' + String(this.state.lastPosition.timestamp).substring(0,9);
+    url = "https://api.yelp.com/v2/search?term=food&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1" + timestamp + "&oauth_nonce=WObsmi&oauth_version=1.0&oauth_signature=j0mvoqfO0gMhGl3p3e68BnwKBp4="
+    url="https://api.yelp.com/v2/search?term=coffee&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473864007&oauth_nonce=bmqWi9&oauth_version=1.0&oauth_signature=0P2C915bOsL5y3gNHyx6CJP6E4Q="
+    var that = this;
+    function getData(url){
+      fetch(url, {method: "GET", mode: "cors"})
+      .then(function(response){
+        data = response.json();
+        console.log(response.json())
+        that.setState({data})
+        return (response);
+      }).catch(function(err){console.log(err)})
+    }
+    var x = getData(url);
 
   }
 
@@ -41,6 +59,8 @@ class WheresMyCoffee extends Component {
     var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
     var token = "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7"
 
+    var lng_lat = {lat: this.state.lastPosition.coords.latitude, lng: this.state.lastPosition.coords.longitude};
+
     var default_parameters = {
       term: 'coffee',
       ll: lng_lat.lat + ',' + lng_lat.lng,
@@ -49,8 +69,8 @@ class WheresMyCoffee extends Component {
 
     /* We set the require parameters here */
     var required_parameters = {
-      oauth_consumer_key : process.env.oauth_consumer_key,
-      oauth_token : process.env.oauth_token,
+      oauth_consumer_key : consumerKey,
+      oauth_token : token,
       oauth_nonce : n(),
       oauth_timestamp : n().toString().substr(0,10),
       oauth_signature_method : 'HMAC-SHA1',
@@ -59,34 +79,29 @@ class WheresMyCoffee extends Component {
 
     var parameters = _.assign(default_parameters, lng_lat, required_parameters);
 
-
     var url = 'http://api.yelp.com/v2/search';
     var search = 'search?term=coffee&';
     var ll = String(this.state.lastPosition.latitude) + ',' + String(this.state.lastPosition.longitude);
     var oAuthConsumerKey = '&oauth_consumer_key=' + consumerKey;
     var oAuthToken = '&oauth_token=' + token;
     var signatureMethod = '&oauth_signature_method=HMAC-SHA1';
-    var timestamp = '&oauth_timestamp=' + n().toString().substr(0,10);
-    var nonce = '&oauth_nonce=' + n();
-    var signature = oauthSignature.generate('GET', url, parameters, consumerSecret, tokenSecret, { encodeSignature: false});
+    var timestamp = '&oauth_timestamp=' + String(this.state.lastPosition.timestamp).substring(0,9);
+    var nonce = '&oauth_nonce=';
 
-    console.log(signature)
 
-    return (url + search +ll + oAuthConsumerKey + oAuthToken + signatureMethod + timestamp + nonce + signature)
+
+    var str = (url + search +default_parameters.ll + oAuthConsumerKey + oAuthToken + signatureMethod + timestamp + nonce)
+
+    fetch(url, {method: "GET"}).then(function(response){console.log(response)});
   }
 
   render() {
-    url = "https://api.yelp.com/v2/search?term=food&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473782721&oauth_nonce=WObsmi&oauth_version=1.0&oauth_signature=j0mvoqfO0gMhGl3p3e68BnwKBp4="
-    function getData(url){
-      fetch(url, {method: "GET"})
-      .then(function(response){
-        console.log(response)
-        return response;
-      })
-    }
-    console.log(this.constructURL())
 
-    console.log(getData(url))
+
+    //  if (this.state.lastPosition != 'unknown'){
+    //    console.log(getData(url))
+    //  }
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
