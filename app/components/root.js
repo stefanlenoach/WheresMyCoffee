@@ -25,6 +25,7 @@ class WheresMyCoffee extends Component {
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
+      debugger
       var lastPosition = position;
       this.setState({lastPosition});
     });
@@ -38,7 +39,6 @@ class WheresMyCoffee extends Component {
 // &oauth_timestamp=1473802903&oauth_nonce=2kELba&oauth_version=1.0&oauth_signature=n5wIP3Y9N861rv541/QcS5hNTzQ=
   constructURL() {
     if(this.state.lastPosition != 'unknown'){
-      var oauthSignature = require('oauth-signature')
       var OAuthSimple = require('oauthsimple')
 
       var term = "coffee"
@@ -48,20 +48,10 @@ class WheresMyCoffee extends Component {
       var consumerSecret = "xz1fy7c22bONrcb-elPYFPtPwds"
       var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
       var token = "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7"
+      var latlng = "ll=" + String(lat) + "," + String(lng)
 
-      latlng = "ll=" + String(lat) + "," + String(lng)
-      var url = "https://api.yelp.com/v2/search"
-      var params = {
-        term: "coffee",
-        ll: latlng,
-        oauth_token: "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7",
-        oauth_version: "1.0",
-        oauth_consumer_secret: "xz1fy7c22bONrcb-elPYFPtPwds"
-      }
       var consumerSecret = 'xz1fy7c22bONrcb-elPYFPtPwds'
       var tokenSecret = 'hwmrEME1CDhGoHxGTXdSN4DUdXQ'
-//https://api.yelp.com/v2/search?ll=37.785834%2C-122.406417&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_nonce=4lvnh&oauth_signature=SOG0hNs2O3T%2BqytFMVELQVAW4Uk%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473878826&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_version=1.0&term=coffee
-//https://api.yelp.com/v2/search?term=coffee&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473879113&oauth_nonce=zqBPLL&oauth_version=1.0&oauth_signature=TZeXIGkuz4gTBRWLYcAXldpU9Ss=
       oauth = new OAuthSimple(consumerKey, tokenSecret)
           request = oauth.sign({
             action: "GET",
@@ -71,12 +61,13 @@ class WheresMyCoffee extends Component {
 
           })
 
-      debugger
-
+      var url = request.signed_url
+      var that = this;
       fetch(url, {method: "GET", mode:"cors"}).then(function(response){
         return response.json()
       }).then(function(data){
-        this.setState({data})
+        
+        that.setState({data})
       }).catch(function(error){
         console.log("Error:", error)
       })
