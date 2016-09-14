@@ -29,21 +29,14 @@ class WheresMyCoffee extends Component {
       var lastPosition = position;
       this.setState({lastPosition});
     });
+    var url = "https://api.yelp.com/v2/search?term=coffee&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473866484&oauth_nonce=C9dVTv&oauth_version=1.0&oauth_signature=Op4Tx1AUkRbLvxdD/afGCmr7siA="
 
-    var timestamp = '&oauth_timestamp=' + String(this.state.lastPosition.timestamp).substring(0,9);
-    url = "https://api.yelp.com/v2/search?term=food&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1" + timestamp + "&oauth_nonce=WObsmi&oauth_version=1.0&oauth_signature=j0mvoqfO0gMhGl3p3e68BnwKBp4="
-    url="https://api.yelp.com/v2/search?term=coffee&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA&oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1473864007&oauth_nonce=bmqWi9&oauth_version=1.0&oauth_signature=0P2C915bOsL5y3gNHyx6CJP6E4Q="
-    var that = this;
-    function getData(url){
-      fetch(url, {method: "GET", mode: "cors"})
-      .then(function(response){
-        data = response.json();
-        console.log(response.json())
-        that.setState({data})
-        return (response);
-      }).catch(function(err){console.log(err)})
-    }
-    var x = getData(url);
+
+    fetch(url, {method: "GET", mode:"cors"}).then(function(response){
+      return response.json()
+    }).then(function(j){
+      console.log(j)
+    })
 
   }
 
