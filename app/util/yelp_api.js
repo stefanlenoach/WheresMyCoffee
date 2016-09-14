@@ -2,19 +2,16 @@
 import oauthSignature from 'oauth-signature'
 import n from 'nonce'
 import request from 'request'
-import qs from 'queryStrong'
+import qs from 'querystring'
 import _ from 'lodash'
 
 
 /* Function for yelp call
  * ------------------------
- * set_parameters: object with params to search
+ * lng_lat: object with params to search
  * callback: callback(error, response, body)
  */
-var request_yelp = function(set_parameters, callback) {
-
-  /* The type of request */
-  var httpMethod = 'GET';
+var request_yelp = function(lng_lat) {
 
   /* The url we are using for the request */
   var url = 'http://api.yelp.com/v2/search';
@@ -22,7 +19,7 @@ var request_yelp = function(set_parameters, callback) {
   /* We can setup default parameters here */
   var default_parameters = {
     term: 'coffee',
-    ll: latitude + ',' + longitude + ',' + accuracy + ',' + altitude + ',' + altitude_accuracy
+    ll: lng_lat.lat + ',' + lng_lat.lng,
     sort: '2'
   };
 
@@ -37,7 +34,7 @@ var request_yelp = function(set_parameters, callback) {
   };
 
   /* We combine all the parameters in order of importance */
-  var parameters = _.assign(default_parameters, set_parameters, required_parameters);
+  var parameters = _.assign(default_parameters, lng_lat, required_parameters);
 
   /* We set our secrets here */
   var consumerSecret = process.env.consumerSecret;
@@ -45,7 +42,7 @@ var request_yelp = function(set_parameters, callback) {
 
   /* Then we call Yelp's Oauth 1.0a server, and it returns a signature */
   /* Note: This signature is only good for 300 seconds after the oauth_timestamp */
-  var signature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret, { encodeSignature: false});
+  var signature = oauthSignature.generate('GET', url, parameters, consumerSecret, tokenSecret, { encodeSignature: false});
 
   /* We add the signature to the list of paramters */
   parameters.oauth_signature = signature;
@@ -58,7 +55,7 @@ var request_yelp = function(set_parameters, callback) {
 
   /* Then we use request to send make the API Request */
   request(apiURL, function(error, response, body){
-    return callback(error, response, body);
+    return response
   });
 
 };
