@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AppRegistry,StyleSheet,Text,View, ListView, TouchableElement, TouchableOpacity} from 'react-native';
+import {AppRegistry,StyleSheet,Text,View, Image, ListView, Linking, TouchableElement, TouchableOpacity} from 'react-native';
 import Button from 'react-native-button'
 import _ from 'lodash'
 
@@ -27,13 +27,18 @@ class Results extends Component {
   }
 
   _renderResult(result) {
-
     return (
-      <TouchableOpacity style={styles.resultRow} >
+      <TouchableOpacity style={styles.resultRow} onPress={() => this._linkPressed(result.url)}>
+        <Image source={{uri: result.image_url}}
+       style={{width: 80, height: 80}} />
         <Text>{`${_.capitalize(result.name)} ${_.capitalize(result.rating)}`}</Text>
         <View style={{flex: 1}} />
       </TouchableOpacity>
     )
+  }
+
+  _linkPressed(url){
+    Linking.openURL(url);
   }
 
 }
