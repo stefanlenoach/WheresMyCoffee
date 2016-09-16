@@ -6,8 +6,7 @@ import Button from 'react-native-button'
 class Search extends Component {
   state = {
     initialPosition: 'unknown',
-    lastPosition: 'unknown',
-    data: 'unknown'
+    lastPosition: 'unknown'
   };
 
   watchID: ?number = null;
@@ -33,7 +32,7 @@ class Search extends Component {
   }
 
   constructURL() {
-    
+
     if(this.state.lastPosition != 'unknown'){
       var OAuthSimple = require('oauthsimple')
       var term = "coffee"
@@ -62,16 +61,15 @@ class Search extends Component {
       fetch(url, {method: "GET", mode:"cors"}).then(function(response){
         return response.json()
       }).then(function(data){
-        that.setState({data})
+        that.props.navigator.push({
+          ident: "Results",
+          data: data
+        })
       }).catch(function(error){
 
         console.log("Error:", error)
       })
 
-      this.props.navigator.push({
-        ident: "Results",
-        data: this.state.data
-      })
     }
   }
 

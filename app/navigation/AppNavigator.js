@@ -18,7 +18,8 @@ class AppNavigator extends Component {
       case "Results":
         return (
           <ResultScreen
-            {...globalNavigatorProps} />
+            {...globalNavigatorProps}
+            data = {route.data} />
         )
     }
   }
