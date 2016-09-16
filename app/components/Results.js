@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import {AppRegistry,StyleSheet,Text,View,TouchableElement} from 'react-native';
+import {AppRegistry,StyleSheet,Text,View,TouchableElement, TouchableOpacity} from 'react-native';
 import Button from 'react-native-button'
-import n from 'nonce'
-import qs from 'querystring'
-import _ from 'lodash'
 
-class WheresMyCoffee extends Component {
+
+class Results extends Component {
   state = {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
@@ -25,7 +23,6 @@ class WheresMyCoffee extends Component {
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      debugger
       var lastPosition = position;
       this.setState({lastPosition});
     });
@@ -34,13 +31,11 @@ class WheresMyCoffee extends Component {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
   }
-// https://api.yelp.com/v2/search?term=coffee&ll=37.788022,-122.399797&oauth_consumer_key=QM1R8nTTpNM9BkDZxlPjPA
-// &oauth_token=_LWVxe12Gh0hwPsXJew1HImgFlXne3X7&oauth_signature_method=HMAC-SHA1
-// &oauth_timestamp=1473802903&oauth_nonce=2kELba&oauth_version=1.0&oauth_signature=n5wIP3Y9N861rv541/QcS5hNTzQ=
+
   constructURL() {
+
     if(this.state.lastPosition != 'unknown'){
       var OAuthSimple = require('oauthsimple')
-
       var term = "coffee"
       var lat = this.state.lastPosition.coords.latitude
       var lng = this.state.lastPosition.coords.longitude
@@ -63,15 +58,17 @@ class WheresMyCoffee extends Component {
 
       var url = request.signed_url
       var that = this;
+
       fetch(url, {method: "GET", mode:"cors"}).then(function(response){
         return response.json()
       }).then(function(data){
-        
         that.setState({data})
       }).catch(function(error){
+
         console.log("Error:", error)
       })
 
+      console.log(this.state.data);
     }
   }
 
@@ -88,11 +85,12 @@ class WheresMyCoffee extends Component {
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
-        <Button
+
+        <TouchableOpacity
           style={{borderWidth: 1, borderColor: 'transparent', backgroundColor: 'mistyrose'}}
-          onPress={this.constructURL()}>
-          Press Me!
-        </Button>
+          onPress={this.constructURL.bind(this)}>
+          <Text>Press Me!</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -117,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = WheresMyCoffee
+module.exports = Results
