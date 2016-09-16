@@ -33,7 +33,7 @@ class Search extends Component {
   }
 
   constructURL() {
-
+    
     if(this.state.lastPosition != 'unknown'){
       var OAuthSimple = require('oauthsimple')
       var term = "coffee"
@@ -68,11 +68,15 @@ class Search extends Component {
         console.log("Error:", error)
       })
 
-      console.log(this.state.data);
+      this.props.navigator.push({
+        ident: "Results",
+        data: this.state.data
+      })
     }
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

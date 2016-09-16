@@ -15,7 +15,7 @@ class AppNavigator extends Component {
             {...globalNavigatorProps} />
         )
 
-      case "Result":
+      case "Results":
         return (
           <ResultScreen
             {...globalNavigatorProps} />
