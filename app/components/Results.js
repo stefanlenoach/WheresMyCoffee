@@ -45,7 +45,6 @@ class Results extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: 'coral',
   },
@@ -59,6 +58,11 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  resultRow: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingBottom: 30,
+  }
 });
 
 module.exports = Results
