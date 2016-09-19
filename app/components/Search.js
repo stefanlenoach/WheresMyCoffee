@@ -78,20 +78,13 @@ class Search extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          WheresMyCoffee
         </Text>
 
         <TouchableOpacity
-          style={{borderWidth: 1, borderColor: 'transparent', backgroundColor: 'mistyrose'}}
+          style={styles.button}
           onPress={this.constructURL.bind(this)}>
-          <Text>Press Me!</Text>
+          <Text style={{fontSize: 15}}>Find Coffee!</Text>
         </TouchableOpacity>
       </View>
     );
@@ -103,18 +96,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'coral',
+    backgroundColor: '#eee',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
+    marginBottom: 30
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    borderRadius: 7,
+    padding: 10,
+    backgroundColor: 'rgb(37, 160, 205)'
+  }
 });
 
 module.exports = Search

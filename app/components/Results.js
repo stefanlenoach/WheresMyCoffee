@@ -15,7 +15,7 @@ class Results extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text style= {{justifyContent:'center', fontWeight: 'bold', fontSize: 20}}>Results</Text>
+      <Text style= {styles.header}>Results</Text>
         <ListView
           style={{marginTop: 100}}
           initialListSize={10}
@@ -48,10 +48,15 @@ class Results extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
+  },
+  header:{
+    textAlign: 'center',
+    position: 'relative',
+    top: 60,
+    fontSize: 30
   },
   resultRow: {
-    backgroundColor: 'coral',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-start',
