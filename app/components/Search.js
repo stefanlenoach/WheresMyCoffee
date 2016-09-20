@@ -5,26 +5,18 @@ import Button from 'react-native-button'
 
 class Search extends Component {
   state = {
-    initialPosition: 'unknown',
-    lastPosition: 'unknown'
+    position: 'unknown'
   };
-
-  watchID: ?number = null;
 
   componentDidMount() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = position;
-        this.setState({initialPosition});
+        this.setState({position});
       },
       (error) => alert(error),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = position;
-      this.setState({lastPosition});
-    });
   }
 
   componentWillUnmount() {
@@ -33,11 +25,11 @@ class Search extends Component {
 
   constructURL() {
 
-    if(this.state.lastPosition != 'unknown'){
+    if(this.state.position != 'unknown'){
       var OAuthSimple = require('oauthsimple')
       var term = "coffee"
-      var lat = this.state.lastPosition.coords.latitude
-      var lng = this.state.lastPosition.coords.longitude
+      var lat = this.state.position.coords.latitude
+      var lng = this.state.position.coords.longitude
       var consumerKey = "QM1R8nTTpNM9BkDZxlPjPA"
       var consumerSecret = "xz1fy7c22bONrcb-elPYFPtPwds"
       var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
@@ -77,7 +69,7 @@ class Search extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
+        <Text style={{fontSize: 30, textAlign:'center'}}>
           WheresMyCoffee
         </Text>
 
@@ -103,11 +95,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     marginBottom: 30
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
   button: {
     borderRadius: 7,
