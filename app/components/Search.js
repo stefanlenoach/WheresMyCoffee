@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-
+import OAuthSimple from 'oauthsimple'
 
 
 class Search extends Component {
@@ -21,15 +21,13 @@ class Search extends Component {
   fetchData() {
 
     if(this.state.position != 'unknown'){
-      var OAuthSimple = require('oauthsimple')
-      var term = "coffee"
       var lat = this.state.position.coords.latitude
       var lng = this.state.position.coords.longitude
+      var latlng = "ll=" + String(lat) + "," + String(lng)
       var consumerKey = "QM1R8nTTpNM9BkDZxlPjPA"
       var consumerSecret = "xz1fy7c22bONrcb-elPYFPtPwds"
       var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
       var token = "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7"
-      var latlng = "ll=" + String(lat) + "," + String(lng)
 
       var consumerSecret = 'xz1fy7c22bONrcb-elPYFPtPwds'
       var tokenSecret = 'hwmrEME1CDhGoHxGTXdSN4DUdXQ'
@@ -60,16 +58,15 @@ class Search extends Component {
   }
 
   render() {
-
     return (
       <View style={styles.container}>
-      
-        <Text style={{fontSize: 30, textAlign:'center'}}>
+
+        <Text style={styles.welcome}>
           WheresMyCoffee
         </Text>
 
         <TouchableOpacity
-          style={styles.button}
+          style={{borderRadius: 7,padding: 10,  backgroundColor: 'rgb(37, 160, 205)'}}
           onPress={this.fetchData.bind(this)}>
           <Text style={{fontSize: 15}}>Find Coffee!</Text>
         </TouchableOpacity>
@@ -91,11 +88,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     marginBottom: 30
-  },
-  button: {
-    borderRadius: 7,
-    padding: 10,
-    backgroundColor: 'rgb(37, 160, 205)'
   }
 });
 
