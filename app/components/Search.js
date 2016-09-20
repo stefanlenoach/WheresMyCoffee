@@ -63,6 +63,7 @@ class Search extends Component {
 
     return (
       <View style={styles.container}>
+      
         <Text style={{fontSize: 30, textAlign:'center'}}>
           WheresMyCoffee
         </Text>
@@ -72,6 +73,7 @@ class Search extends Component {
           onPress={this.fetchData.bind(this)}>
           <Text style={{fontSize: 15}}>Find Coffee!</Text>
         </TouchableOpacity>
+
       </View>
     );
   }
