@@ -9,7 +9,6 @@ class Search extends Component {
   };
 
   componentDidMount() {
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({position});
@@ -17,10 +16,6 @@ class Search extends Component {
       (error) => alert(error),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
-  }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
   }
 
   constructURL() {
