@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {AppRegistry,StyleSheet,Text,View,TouchableElement, TouchableOpacity} from 'react-native';
-import Button from 'react-native-button'
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+
 
 
 class Search extends Component {
@@ -18,7 +18,7 @@ class Search extends Component {
     );
   }
 
-  constructURL() {
+  fetchData() {
 
     if(this.state.position != 'unknown'){
       var OAuthSimple = require('oauthsimple')
@@ -44,7 +44,6 @@ class Search extends Component {
 
       var url = request.signed_url
       var that = this;
-
       fetch(url, {method: "GET", mode:"cors"}).then(function(response){
         return response.json()
       }).then(function(data){
@@ -70,7 +69,7 @@ class Search extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={this.constructURL.bind(this)}>
+          onPress={this.fetchData.bind(this)}>
           <Text style={{fontSize: 15}}>Find Coffee!</Text>
         </TouchableOpacity>
       </View>
