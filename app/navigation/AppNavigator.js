@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Navigator, Text } from 'react-native'
-import SearchScreen from '../components/Search'
-import ResultScreen from '../components/Results'
+import Search from '../components/Search'
+import Result from '../components/Results'
 
 class AppNavigator extends Component {
 
@@ -11,13 +11,13 @@ class AppNavigator extends Component {
     switch(route.ident) {
       case "Search":
         return (
-          <SearchScreen
+          <Search
             {...globalNavigatorProps} />
         )
 
       case "Results":
         return (
-          <ResultScreen
+          <Result
             {...globalNavigatorProps}
             data = {route.data} />
         )
