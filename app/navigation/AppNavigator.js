@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Navigator, Text } from 'react-native'
+import { Navigator } from 'react-native'
 import Search from '../components/Search'
 import Result from '../components/Results'
 
@@ -29,7 +29,6 @@ class AppNavigator extends Component {
       <Navigator
         initialRoute={this.props.initialRoute}
         ref="appNavigator"
-        style={styles.navigatorStyles}
         renderScene={this._renderScene}
         configureScene={(route) => ({
           ...route.sceneConfig || Navigator.SceneConfigs.FloatFromRight })} />
@@ -37,13 +36,5 @@ class AppNavigator extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-
-  navigatorStyles: {
-
-  }
-
-})
 
 module.exports = AppNavigator
