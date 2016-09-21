@@ -29,19 +29,16 @@ class Search extends Component {
       var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
       var token = "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7"
 
-      var consumerSecret = 'xz1fy7c22bONrcb-elPYFPtPwds'
-      var tokenSecret = 'hwmrEME1CDhGoHxGTXdSN4DUdXQ'
       oauth = new OAuthSimple(consumerKey, tokenSecret)
-          request = oauth.sign({
-            action: "GET",
-            path: "https://api.yelp.com/v2/search",
-            parameters: "term=coffee&" + latlng,
-            signatures: {api_key: consumerKey, shared_secret: consumerSecret, access_token: token, access_secret: tokenSecret},
+      request = oauth.sign({
+        action: "GET",
+        path: "https://api.yelp.com/v2/search",
+        parameters: "term=coffee&" + latlng,
+        signatures: {api_key: consumerKey, shared_secret: consumerSecret, access_token: token, access_secret: tokenSecret},
 
-          })
+      })
 
       var url = request.signed_url
-      var that = this;
       fetch(url, {method: "GET", mode:"cors"}).then(function(response){
         return response.json()
       }).then(function(data){
@@ -50,7 +47,6 @@ class Search extends Component {
           data: data
         })
       }).catch(function(error){
-
         console.log("Error:", error)
       })
 
