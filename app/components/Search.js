@@ -38,8 +38,8 @@ class Search extends Component {
 
       })
 
-      var url = request.signed_url
-      fetch(url, {method: "GET", mode:"cors"}).then(function(response){
+      var that = this;
+      fetch(request.signed_url, {method: "GET"}).then(function(response){
         return response.json()
       }).then(function(data){
         that.props.navigator.push({
@@ -49,7 +49,6 @@ class Search extends Component {
       }).catch(function(error){
         console.log("Error:", error)
       })
-
     }
   }
 
@@ -62,7 +61,7 @@ class Search extends Component {
         </Text>
 
         <TouchableOpacity
-          style={{borderRadius: 7,padding: 10,  backgroundColor: 'rgb(37, 160, 205)'}}
+          style={{borderRadius: 7,padding: 10,  backgroundColor: '#4d9be3'}}
           onPress={this.fetchData.bind(this)}>
           <Text style={{fontSize: 15}}>Find Coffee!</Text>
         </TouchableOpacity>
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
   },
   welcome: {
     fontSize: 30,
