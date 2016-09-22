@@ -9,7 +9,6 @@ class WheresMyCoffee extends Component {
             initialRoute={{ident: "Search"}} />
     )
   }
-
 }
 
 AppRegistry.registerComponent('WheresMyCoffee', () => WheresMyCoffee)
