@@ -5,15 +5,16 @@ class Results extends Component {
 
   constructor(props) {
     super(props)
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+    var dataStore = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
     this.state = {
-      results: ds.cloneWithRows(props.data.businesses)
+      results: dataStore.cloneWithRows(props.data.businesses)
     }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
+        <Text style= {styles.header}>Results</Text>
         <ListView
           style={{marginTop: 100}}
           initialListSize={10}
@@ -25,7 +26,7 @@ class Results extends Component {
 
   renderResult(result) {
     return (
-      <TouchableOpacity style={styles.resultRow} onPress={() => this.linkPressed(result.url)}>
+      <TouchableOpacity style={styles.resultRow} onPress={() => Linking.openURL(result.url)}>
         <Image source={{uri: result.image_url}}
        style={{width: 80, height: 80, justifyContent: 'flex-start'}} />
        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
@@ -33,21 +34,13 @@ class Results extends Component {
          <Text>Rating: {`${result.rating}`}</Text>
          <Text>Phone: {`${result.display_phone}`}</Text>
        </View>
-        <View style={styles.resultRow} />
       </TouchableOpacity>
     )
-  }
-
-  linkPressed(url){
-    Linking.openURL(url);
   }
 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#eee',
-  },
   header:{
     textAlign: 'center',
     position: 'relative',
