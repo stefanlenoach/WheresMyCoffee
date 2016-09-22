@@ -8,25 +8,24 @@ class Results extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
     this.state = {
       results: ds.cloneWithRows(props.data.businesses)
+    }
   }
-}
 
   render() {
     return (
       <View style={styles.container}>
-      <Text style= {styles.header}>Results</Text>
         <ListView
           style={{marginTop: 100}}
           initialListSize={10}
           dataSource={this.state.results}
-          renderRow={(result) => { return this._renderResult(result) }} />
+          renderRow={(result) => { return this.renderResult(result) }} />
       </View>
     );
   }
 
-  _renderResult(result) {
+  renderResult(result) {
     return (
-      <TouchableOpacity style={styles.resultRow} onPress={() => this._linkPressed(result.url)}>
+      <TouchableOpacity style={styles.resultRow} onPress={() => this.linkPressed(result.url)}>
         <Image source={{uri: result.image_url}}
        style={{width: 80, height: 80, justifyContent: 'flex-start'}} />
        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
@@ -39,7 +38,7 @@ class Results extends Component {
     )
   }
 
-  _linkPressed(url){
+  linkPressed(url){
     Linking.openURL(url);
   }
 
