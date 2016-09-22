@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {AppRegistry,StyleSheet,Text,View, Image, ListView, Linking, TouchableElement, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, ListView, Linking, TouchableOpacity} from 'react-native';
 
 class Results extends Component {
 
   constructor(props) {
-
-  super(props)
-  var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
-  this.state = {
-    results: ds.cloneWithRows(props.data.businesses)
+    super(props)
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+    this.state = {
+      results: ds.cloneWithRows(props.data.businesses)
   }
 }
 
