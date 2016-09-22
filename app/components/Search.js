@@ -36,11 +36,12 @@ class Search extends Component {
 
     })
 
-    var that = this;
+    var nav = this.props.navigator
+
     fetch(request.signed_url, {method: "GET"}).then(function(response){
       return response.json()
     }).then(function(data){
-      that.props.navigator.push({
+      nav.push({
         ident: "Results",
         data: data
       })
