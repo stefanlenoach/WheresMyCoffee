@@ -22,10 +22,10 @@ class Search extends Component {
     var lat = this.state.position.coords.latitude
     var lng = this.state.position.coords.longitude
     var latlng = "ll=" + String(lat) + "," + String(lng)
-    var consumerKey = "QM1R8nTTpNM9BkDZxlPjPA"
-    var consumerSecret = "xz1fy7c22bONrcb-elPYFPtPwds"
-    var tokenSecret = "hwmrEME1CDhGoHxGTXdSN4DUdXQ"
-    var token = "_LWVxe12Gh0hwPsXJew1HImgFlXne3X7"
+    var consumerKey = "***"
+    var consumerSecret = "***"
+    var tokenSecret = "***"
+    var token = "***"
 
     oauth = new OAuthSimple(consumerKey, tokenSecret)
     request = oauth.sign({
